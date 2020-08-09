@@ -29,7 +29,8 @@ export default {
             apiKey: "demoApiKey",
             cardNumber: null,
             clover: null,
-            loading: true
+            loading: true,
+            scriptId: 'cloverSDK'
         };
     },
     mounted() {
@@ -39,13 +40,9 @@ export default {
     methods: {
         // load Clover eCommerce SDK
         _loadScript() {
-            //  do not load the script if it's already loaded
-            if (window.Clover) {
-                console.log('Clover script already loaded');
-                return this._setupForm();
-            }
-
+            const head = document.getElementsByTagName('head')[0];
             const script = document.createElement("script");
+            script.id = this.scriptId;
             script.src = "https://checkout.sandbox.dev.clover.com/sdk.js";
             script.type = "text/javascript";
             script.onload = () => {
@@ -54,7 +51,7 @@ export default {
             script.onerror = err => {
                 console.log("load script error", err);
             };
-            document.body.appendChild(script);
+            head.append(script);
         },
         // setup form
         _setupForm() {
@@ -72,8 +69,19 @@ export default {
     },
     beforeUnmount() {
         console.info("Clover form before destroy, we remove the card input listener");
-        // remove event listener for card number input
-        this.cardNumber.removeEventListener("change", handleInput);
+
+        try {
+          // this is the workaround
+          // remove all related Clover iFrame stuff!
+          this.cardNumber.removeEventListener("change", handleInput);
+          document.getElementById(this.scriptId).remove();
+          Array.from(document.getElementsByClassName('clover-footer')).forEach((dom) => dom.remove());
+          Array.from(document.getElementsByTagName('iframe')).forEach((dom) => dom.parentNode.remove());
+          this.clover = null;
+        }
+        catch (err) {
+          console.error(err);
+        }
     }
 }
 </script>
