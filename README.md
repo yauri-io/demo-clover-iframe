@@ -3,7 +3,7 @@ ___
 
 ### Make sure to install NodeJS v12.x
 
-###How to run:
+### How to run:
 1. Clone the project
 2. Install dependencies: ``npm install``
 3. Run project: ``npm run dev``
