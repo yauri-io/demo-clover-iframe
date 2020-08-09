@@ -80,7 +80,7 @@ export default {
 
 <template>
     <div v-if="loading">Loading form</div>
-    <div style="height: 60px">
+    <div style="height: 60px;">
         <div id="card-number" style="margin: 10px 0 0;"></div>
     </div>
     <div>

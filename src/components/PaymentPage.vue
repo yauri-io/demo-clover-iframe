@@ -10,7 +10,9 @@ export default {
     <div>
         <h1>Payment page</h1>
     </div>
-    <div>
+    <div style="display: flex; justify-content: center;">
+      <div>
         <PaymentForm />
+      </div>
     </div>
 </template>
