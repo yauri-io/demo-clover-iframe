@@ -51,9 +51,6 @@ export default {
             script.onload = () => {
                 this._setupForm();
             };
-            script.onerror = err => {
-                console.log("load script error", err);
-            };
             document.body.appendChild(script);
         },
         // setup form
